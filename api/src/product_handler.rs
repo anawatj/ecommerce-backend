@@ -1,7 +1,6 @@
-use application::products::update::update_product;
 use shared::response_models::{ResponseProductBody, ResponseProduct};
 use application::products::{create, read ,update ,delete};
-use domain::models::{NewProduct, Product};
+use domain::models::{NewProduct};
 use rocket::{get, post ,put ,delete};
 use rocket::response::status::{NotFound, Created};
 use rocket::serde::json::Json;
