@@ -17,3 +17,21 @@ diesel::table! {
         product_qty -> Int4
     }
 }
+diesel::table! {
+    orders(id){
+        id->Int4,
+        order_customer->VarChar,
+        order_date->Date,
+        order_status->VarChar,
+        address_1->VarChar,
+        address_2->VarChar,
+        ship_date->Date
+    }
+}
+diesel::table! {
+    order_details(order_id,product_id){
+        order_id->Int4,
+        product_id->Int4,
+        qty->Int4
+    }
+}
