@@ -33,7 +33,34 @@ pub struct ClaimData {
     pub user: String,
     pub login_session: String,
 }
+#[rocket::async_trait]
+impl<'r> FromRequest<'r> for ClaimData {
+    type Error = status::Custom<Json<Response>>;
+    async fn from_request(req: &'r Request<'_>)-> request::Outcome<Self, status::Custom<Json<Response>>> {
+        if let Some(authen_header) = req.headers().get_one("Authorization") {
+            let authen_str = authen_header.to_string();
+            if authen_str.starts_with("Bearer") {
+                let token = authen_str[6..authen_str.len()].trim();
+                if let Ok(token_data) = decode_token(token.to_string()) {
+                    
+                        return Outcome::Success(token_data.claims);
+                    
+                } 
+            }
+        }
 
+        Outcome::Failure((
+            Status::BadRequest,
+            status::Custom(
+                Status::Unauthorized,
+                Json(Response {
+                    message: String::from("Invalid token"),
+                    data: serde_json::to_value("").unwrap(),
+                }),
+            ),
+        ))
+    }
+}
 
 pub fn generate_token(email: String) -> String {
     let now = Utc::now().timestamp_nanos() / 1_000_000_000; // nanosecond -> second

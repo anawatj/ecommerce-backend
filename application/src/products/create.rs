@@ -4,8 +4,8 @@ use infrastructure::establish_connection;
 use diesel::prelude::*;
 use rocket::response::status::Created;
 use rocket::serde::json::Json;
-
-pub fn create_product(product: Json<NewProduct>) -> Created<String> {
+use shared::jwt::ClaimData;
+pub fn create_product(token:ClaimData,product: Json<NewProduct>) -> Created<String> {
     use domain::schema::products;
 
     let data = product.into_inner();

@@ -3,8 +3,8 @@ use infrastructure::establish_connection;
 use diesel::prelude::*;
 use rocket::response::status::NotFound;
 use domain::models::Product;
-
-pub fn delete_product(product_id: i32) -> Result<Vec<Product>, NotFound<String>> {
+use shared::jwt::ClaimData;
+pub fn delete_product(token:ClaimData,product_id: i32) -> Result<Vec<Product>, NotFound<String>> {
     use domain::schema::products::dsl::*;
     use domain::schema::products;
 

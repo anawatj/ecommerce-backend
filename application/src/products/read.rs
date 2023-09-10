@@ -3,8 +3,8 @@ use shared::response_models::{ResponseProduct, ResponseProductBody};
 use infrastructure::establish_connection;
 use diesel::prelude::*;
 use rocket::response::status::NotFound;
-
-pub fn list_product(product_id: i32) -> Result<Product, NotFound<String>> {
+use shared::jwt::ClaimData;
+pub fn list_product(token:ClaimData,product_id: i32) -> Result<Product, NotFound<String>> {
     use domain::schema::products;
 
     match products::table.find(product_id).first::<Product>(&mut establish_connection()) {
@@ -20,9 +20,8 @@ pub fn list_product(product_id: i32) -> Result<Product, NotFound<String>> {
         }
     }
 }
-pub fn list_products() -> Vec<Product> {
+pub fn list_products(token: ClaimData) -> Vec<Product> {
     use domain::schema::products;
-
     match products::table.select(products::all_columns).load::<Product>(&mut establish_connection()) {
         Ok(mut products) => {
            // products.sort();

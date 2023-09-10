@@ -6,7 +6,8 @@ use diesel::prelude::*;
 use diesel::prelude::*;
 use rocket::response::status::Created;
 use rocket::serde::json::Json;
-pub fn update_product(product_id:i32,product: Json<NewProduct>) -> Result<Product,NotFound<String>>{
+use shared::jwt::ClaimData;
+pub fn update_product(token:ClaimData,product_id:i32,product: Json<NewProduct>) -> Result<Product,NotFound<String>>{
     use domain::schema::products::dsl::*;
     match diesel::update(products.find(product_id)).set((
         product_name.eq(product.product_name.to_string()),
