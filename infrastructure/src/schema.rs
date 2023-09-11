@@ -25,16 +25,20 @@ diesel::table! {
 diesel::table! {
     orders (id) {
         id -> Int4,
+        #[max_length = 1000]
+        order_desc -> Varchar,
         #[max_length = 200]
         order_customer -> Varchar,
-        order_date -> Date,
+        #[max_length = 100]
+        order_date -> Varchar,
         #[max_length = 100]
         order_status -> Varchar,
         #[max_length = 1000]
         address_1 -> Varchar,
         #[max_length = 1000]
         address_2 -> Varchar,
-        ship_date -> Date,
+        #[max_length = 100]
+        ship_date -> Varchar,
     }
 }
 

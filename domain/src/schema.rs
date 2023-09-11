@@ -1,3 +1,5 @@
+use diesel::data_types::PgTimestamp;
+
 diesel::table! {
     customers(id){
         id -> Int4,
@@ -20,12 +22,13 @@ diesel::table! {
 diesel::table! {
     orders(id){
         id->Int4,
+        order_desc -> VarChar,
         order_customer->VarChar,
-        order_date->Date,
+        order_date-> VarChar,
         order_status->VarChar,
         address_1->VarChar,
         address_2->VarChar,
-        ship_date->Date
+        ship_date->VarChar
     }
 }
 diesel::table! {

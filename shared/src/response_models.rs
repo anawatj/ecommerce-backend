@@ -1,5 +1,6 @@
 // shared/src/response_models.rs
 
+use domain::models::Order;
 use domain::models::Product;
 use domain::models::Customers;
 
@@ -29,6 +30,19 @@ pub enum ResponseCustomerBody {
 #[serde(crate = "rocket::serde")]
 pub struct ResponseCustomer {
     pub body: ResponseCustomerBody,
+}
+
+#[derive(Serialize)]
+pub enum ResponseOrderBody {
+    Message(String),
+    Data(Order),
+    Orders(Vec<Order>)
+}
+
+#[derive(Serialize)]
+#[serde(crate = "rocket::serde")]
+pub struct ResponseOrder {
+    pub body: ResponseOrderBody,
 }
 
 
