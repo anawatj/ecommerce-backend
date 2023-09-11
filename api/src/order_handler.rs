@@ -1,5 +1,6 @@
+
 use shared::response_models::{ResponseOrderBody, ResponseOrder};
-use application::orders::{create, read };
+use application::orders::{create, read, delete };
 use domain::models::{NewOrder};
 use rocket::{get, post ,put ,delete};
 use rocket::response::status::{NotFound, Created};
@@ -25,4 +26,11 @@ pub fn list_order_handler(token:ClaimData,order_id: i32) -> Result<String, NotFo
 #[post("/orders", format = "application/json", data = "<order>")]
 pub fn create_order_handler(token:ClaimData,order: Json<NewOrder>) -> Created<String> {
     create::create_orders(token, order)
+}
+#[delete("/orders/<order_id>")]
+pub fn delete_order(token:ClaimData,order_id:i32)->Result<String,NotFound<String>>{
+    let orders = delete::delete_order(token,order_id)?;
+    let response = ResponseOrder { body: ResponseOrderBody::Orders(orders) };
+
+    Ok(serde_json::to_string(&response).unwrap())
 }
