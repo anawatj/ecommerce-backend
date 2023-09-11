@@ -1,6 +1,7 @@
 // shared/src/response_models.rs
 
 use domain::models::Order;
+use domain::models::OrderRead;
 use domain::models::Product;
 use domain::models::Customers;
 
@@ -35,7 +36,7 @@ pub struct ResponseCustomer {
 #[derive(Serialize)]
 pub enum ResponseOrderBody {
     Message(String),
-    Data(Order),
+    Data(OrderRead),
     Orders(Vec<Order>)
 }
 

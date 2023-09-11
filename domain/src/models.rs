@@ -25,6 +25,19 @@ pub struct Order{
     pub address_2:String ,
     pub ship_date:String
 }
+
+#[derive(Queryable, Serialize, Ord, Eq, PartialEq, PartialOrd)]
+pub struct OrderRead{
+    pub id:i32,
+    pub order_desc:String,
+    pub order_customer:String ,
+    pub order_date:String,
+    pub order_status:String ,
+    pub address_1:String ,
+    pub address_2:String ,
+    pub ship_date:String,
+    pub order_details:Vec<(i32,i32)>
+}
 #[derive(Queryable, Serialize, Ord, Eq, PartialEq, PartialOrd)]
 pub struct OrderDetail{
     pub order_id : i32,
